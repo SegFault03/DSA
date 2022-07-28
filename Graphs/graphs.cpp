@@ -5,7 +5,7 @@ template <typename T>
 void printGraph(map<T,vector<T>>&graph)
 {
     cout<<"The graph:-"<<endl;
-    for(typename map<int,vector<int>>::iterator key=graph.begin();key!=graph.end();key++)
+    for(typename map<T,vector<T>>::iterator key=graph.begin();key!=graph.end();key++)
     {
         cout<<"["<<key->first<<"]"<<"--->";
         for(typename vector<T>::iterator value=key->second.begin();value!=key->second.end();value++)
@@ -14,14 +14,20 @@ void printGraph(map<T,vector<T>>&graph)
     }
 }
 
+// template <typename T>
+// void BFS(map<T,vector<T>>&graph)
+// {
+//     vector<T>vis,queue;
+//     typename map<T,vector<T>>::iterator itr=graph.begin();
 
+// }
 
 int main()
 {
     int input=0,r_node=0,n_nodes=0;
     std::string adjacent_nodes="",temp="";
     map<int,vector<int>>graph;
-    std::cout<<"Enter a node followed by it's adjacent nodes in space separated format:-\nEnter -1 to terminate\n";
+    std::cout<<"Enter a node followed by it's adjacent nodes in space separated format:-\nEnter -1 to terminate, if no adjacent nodes present enter -1\n";
     cin>>r_node;
     do
     {
@@ -29,8 +35,11 @@ int main()
         break;
         getline(cin>>ws,adjacent_nodes);
         adjacent_nodes+=" ";
+        temp="";
         for(auto word:adjacent_nodes)
         {
+            if(temp=="-1")
+            break;
             if(word==' ')
             {
                 graph[r_node].push_back(stoi(temp));

@@ -1,14 +1,15 @@
 #include <bits/stdc++.h>
 using namespace std;
+//IMPLEMENTING ADJACENCY LIST REP OF A GRAPH
 
 template <typename T>
-void printGraph(map<T,vector<T>>&graph)
+void printGraph(map<T,vector<T>>&graph, T null_value=-1)
 {
     cout<<"The graph:-"<<endl;
     for(typename map<T,vector<T>>::iterator key=graph.begin();key!=graph.end();key++)
     {
         cout<<"["<<key->first<<"]"<<"--->";
-        if(key->second[0]==-1)
+        if(key->second[0]==null_value)
         {
             cout<<"None"<<endl;
             continue;
@@ -19,13 +20,35 @@ void printGraph(map<T,vector<T>>&graph)
     }
 }
 
-// template <typename T>
-// void BFS(map<T,vector<T>>&graph)
-// {
-//     vector<T>vis,queue;
-//     typename map<T,vector<T>>::iterator itr=graph.begin();
-
-// }
+template <typename T>
+void BFS(map<T,vector<T>>&graph, T null_value)
+{
+    if(graph.size()==0)
+    return;
+    cout<<"The BFS results:"<<endl;
+    T key;
+    typename map<T,vector<T>>::iterator itr=graph.begin();
+    vector<T>vis={itr->first},queue={itr->first};
+    typename vector<T>::iterator val_itr;
+    while(!queue.empty())
+    {
+        val_itr=queue.begin();
+        key=*val_itr;
+        queue.erase(val_itr);
+        cout<<key<<" ";
+        if(graph[key].at(0)!=null_value)
+        {
+            for(val_itr=graph[key].begin();val_itr!=graph[key].end();val_itr++)
+            {
+                if(find(vis.begin(),vis.end(),*val_itr)==vis.end())
+                {
+                    queue.push_back(*val_itr);
+                    vis.push_back(*val_itr);
+                }
+            }
+        }
+    }
+}
 
 int main()
 {
@@ -59,5 +82,6 @@ int main()
         cin>>r_node;
     }
     while(r_node!=-1);
-    printGraph(graph);
+    printGraph(graph,-1);
+    BFS(graph,-1);
 }

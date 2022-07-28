@@ -8,6 +8,11 @@ void printGraph(map<T,vector<T>>&graph)
     for(typename map<T,vector<T>>::iterator key=graph.begin();key!=graph.end();key++)
     {
         cout<<"["<<key->first<<"]"<<"--->";
+        if(key->second[0]==-1)
+        {
+            cout<<"None"<<endl;
+            continue;
+        }
         for(typename vector<T>::iterator value=key->second.begin();value!=key->second.end();value++)
         cout<<*value<<" ";
         cout<<endl;
@@ -39,7 +44,10 @@ int main()
         for(auto word:adjacent_nodes)
         {
             if(temp=="-1")
-            break;
+            {
+                graph[r_node].push_back(-1);
+                break;
+            }
             if(word==' ')
             {
                 graph[r_node].push_back(stoi(temp));
